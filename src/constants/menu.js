@@ -26,229 +26,232 @@ const data = [{
     // ]
   },
     {
-        id: 'categories',
-        icon: "simple-icon-list",
-        label: "menu.categories",
-        to: "/app/categories",
-        subs: [{
-            icon: 'simple-icon-note',
-            label: "menu.create",
-            permissions: 'category.store',
-            to: "/app/categories/create",
-        }, {
-            icon: 'iconsminds-preview',
-            label: "menu.view",
-            permissions: 'category',
-            to: "/app/categories/view",
-        }]
-    },
-    {
-        id: 'Users',
-        icon: "simple-icon-user-follow",
-        label: "menu.users",
-        subPermissions: ['user','user.store','user.edit', 'user.update', 'user.delete'],
-        to: "/app/users/view",
-        subs: [
-                {
-                icon: 'simple-icon-note',
-                label: "menu.create",
-                permissions: 'user.store',
-                to: "/app/users/create",
-            },
-            {
-                icon: "iconsminds-preview",
-                label: "menu.view",
-                permissions: 'user',
-                to: "/app/users/view"
-            }]
-    },
-    {
-        id: 'authors',
-        icon: "iconsminds-user",
-        label: "menu.authors",
-        subPermissions: ['author','author.store', 'author.edit', 'author.update', 'author.delete'],
-        to: "/app/author/view",
-        subs: [
-            {
-                icon: 'simple-icon-note',
-                label: "menu.create",
-                permissions: 'author.store',
-                to: "/app/author/create",
-            },
-            {
-                icon: "iconsminds-preview",
-                label: "menu.view",
-                permissions: 'author',
-                to: "/app/author/view"
-            }]
-    },
-    {
-        id: 'posts',
-        icon: "iconsminds-box-with-folders",
-        label: "menu.posts",
-        subPermissions: ['post','post.store', 'post.edit', 'post.update', 'post.delete'],
-        to: "/app/post/view",
-        subs: [
-                {
-                icon: 'simple-icon-note',
-                label: "menu.create",
-                permissions: 'post.store',
-                to: "/app/post/create",
-            },
-            {
-                icon: "iconsminds-preview",
-                label: "menu.view",
-                permissions: 'post',
-                to: "/app/post/view"
-            }]
-    },
-    {
-        id: 'quotes',
-        icon: "iconsminds-quotes",
-        label: "menu.quotes",
-        subPermissions: ['quote','quote.store', 'quote.edit', 'quote.update', 'quote.delete'],
-        to: "/app/post/view",
-        subs: [
-            {
-                icon: 'simple-icon-note',
-                label: "menu.create",
-                permissions: 'quote.store',
-                to: "/app/quote/create",
-            },
-            {
-                icon: "iconsminds-preview",
-                label: "menu.view",
-                permissions: 'quote',
-                to: "/app/quote/view"
-            }]
-    },
-    {
-        id: 'tags',
-        icon: "iconsminds-tag-3",
-        label: "menu.tags",
-        subPermissions: [
-            'tag',
-            'tag.store',
-            'tag.edit',
-            'tag.update',
-            'tag.delete',
-            'seo-tag',
-            'seo-tag.store',
-            'seo-tag.edit',
-            'seo-tag.update',
-            'seo-tag.delete'
-        ],
-        to: "/app/tags/view",
-        subs: [
-                {
-                icon: 'simple-icon-note',
-                label: "menu.create",
-                permissions: 'tag.store',
-                to: "/app/tags/create",
-            },
-            {
-                icon: "iconsminds-preview",
-                label: "menu.view",
-                permissions: 'tag',
-                to: "/app/tags/view"
-            },
-            {
-                id: 'seotags',
-                icon: "simple-icon-key",
-                label: "menu.seo-tags",
-                subPermissions: ['seo-tag', 'seo-tag.store', 'seo-tag.edit', 'seo-tag.update', 'seo-tag.delete'],
-                to: "/app/seo-tags",
-                subs: [{
-                    icon: 'simple-icon-note',
-                    label: "menu.create",
-                    permissions: 'seo-tag.store',
-                    to: "/app/seo-tags/create",
-                },
+            id: 'posts',
+            icon: "iconsminds-quill-3",
+            label: "menu.languages",
+            subPermissions: ['languages'],
+            to: "/app/post/view",
+            subs: [
                     {
-                        icon: 'iconsminds-preview',
-                        label: "menu.view",
-                        permissions: 'seo-tag',
-                        to: "/app/seo-tags/view",
-                    }]
-            }
-        ]
-    },
-    {
-        id: "newsletter",
-        icon: "iconsminds-bird-delivering-letter",
-        label: "menu.newsletter",
-        permissions: 'newsletter',
-        to: "/app/newsletter",
-    },
-    {
-        id: 'settings',
-        icon: 'simple-icon-settings',
-        label: 'menu.settings',
-        subPermissions: [
-            'permission',
-            'permission.store',
-            'permission.edit',
-            'permission.update',
-            'permission.delete',
-            'role',
-            'role.store',
-            'role.edit',
-            'role.update',
-            'role.delete',
-        ],
-        to: "/app/settings/general",
-        subs: [
-            {
-                id: 'Roles',
-                icon: "iconsminds-key-lock",
-                label: "menu.roles",
-                subPermissions: [
-                    'role',
-                    'role.store',
-                    'role.edit',
-                    'role.update',
-                    'role.delete',
-                ],
-                to: "/app/roles",
-                subs: [{
                     icon: 'simple-icon-note',
                     label: "menu.create",
-                    permissions: 'role.store',
-                    to: "/app/roles/create",
-                }, {
-                    icon: 'iconsminds-preview',
+                    permissions: 'languages.create',
+                    to: "/app/language/create",
+                },
+                {
+                    icon: "iconsminds-preview",
                     label: "menu.view",
-                    permissions: 'role',
-                    to: "/app/roles/view",
+                    permissions: 'languages',
+                    to: "/app/language/view"
                 }]
-            },
-            {
-                id: 'permissions',
-                icon: "simple-icon-key",
-                label: "menu.permissions",
-                subPermissions: [
-                    'permission',
-                    'permission.store',
-                    'permission.edit',
-                    'permission.update',
-                    'permission.delete',
-                ],
-                to: "/app/permissions",
-                subs: [{
-                    icon: 'simple-icon-note',
-                    label: "menu.create",
-                    permissions: 'permission.store',
-                    to: "/app/permissions/create",
-                },
-                    {
-                        icon: 'iconsminds-preview',
-                        label: "menu.view",
-                        permissions: 'permission',
-                        to: "/app/permissions/view",
-                    }]
-            },
-        ]
     },
+    // {
+    //     id: 'Users',
+    //     icon: "simple-icon-user-follow",
+    //     label: "menu.users",
+    //     subPermissions: ['user','user.store','user.edit', 'user.update', 'user.delete'],
+    //     to: "/app/users/view",
+    //     subs: [
+    //             {
+    //             icon: 'simple-icon-note',
+    //             label: "menu.create",
+    //             permissions: 'user.store',
+    //             to: "/app/users/create",
+    //         },
+    //         {
+    //             icon: "iconsminds-preview",
+    //             label: "menu.view",
+    //             permissions: 'user',
+    //             to: "/app/users/view"
+    //         }]
+    // },
+    // {
+    //     id: 'authors',
+    //     icon: "iconsminds-user",
+    //     label: "menu.authors",
+    //     subPermissions: ['author','author.store', 'author.edit', 'author.update', 'author.delete'],
+    //     to: "/app/author/view",
+    //     subs: [
+    //         {
+    //             icon: 'simple-icon-note',
+    //             label: "menu.create",
+    //             permissions: 'author.store',
+    //             to: "/app/author/create",
+    //         },
+    //         {
+    //             icon: "iconsminds-preview",
+    //             label: "menu.view",
+    //             permissions: 'author',
+    //             to: "/app/author/view"
+    //         }]
+    // },
+    // {
+    //     id: 'posts',
+    //     icon: "iconsminds-box-with-folders",
+    //     label: "menu.posts",
+    //     subPermissions: ['post','post.store', 'post.edit', 'post.update', 'post.delete'],
+    //     to: "/app/post/view",
+    //     subs: [
+    //             {
+    //             icon: 'simple-icon-note',
+    //             label: "menu.create",
+    //             permissions: 'post.store',
+    //             to: "/app/post/create",
+    //         },
+    //         {
+    //             icon: "iconsminds-preview",
+    //             label: "menu.view",
+    //             permissions: 'post',
+    //             to: "/app/post/view"
+    //         }]
+    // },
+    // {
+    //     id: 'quotes',
+    //     icon: "iconsminds-quotes",
+    //     label: "menu.quotes",
+    //     subPermissions: ['quote','quote.store', 'quote.edit', 'quote.update', 'quote.delete'],
+    //     to: "/app/post/view",
+    //     subs: [
+    //         {
+    //             icon: 'simple-icon-note',
+    //             label: "menu.create",
+    //             permissions: 'quote.store',
+    //             to: "/app/quote/create",
+    //         },
+    //         {
+    //             icon: "iconsminds-preview",
+    //             label: "menu.view",
+    //             permissions: 'quote',
+    //             to: "/app/quote/view"
+    //         }]
+    // },
+    // {
+    //     id: 'tags',
+    //     icon: "iconsminds-tag-3",
+    //     label: "menu.tags",
+    //     subPermissions: [
+    //         'tag',
+    //         'tag.store',
+    //         'tag.edit',
+    //         'tag.update',
+    //         'tag.delete',
+    //         'seo-tag',
+    //         'seo-tag.store',
+    //         'seo-tag.edit',
+    //         'seo-tag.update',
+    //         'seo-tag.delete'
+    //     ],
+    //     to: "/app/tags/view",
+    //     subs: [
+    //             {
+    //             icon: 'simple-icon-note',
+    //             label: "menu.create",
+    //             permissions: 'tag.store',
+    //             to: "/app/tags/create",
+    //         },
+    //         {
+    //             icon: "iconsminds-preview",
+    //             label: "menu.view",
+    //             permissions: 'tag',
+    //             to: "/app/tags/view"
+    //         },
+    //         {
+    //             id: 'seotags',
+    //             icon: "simple-icon-key",
+    //             label: "menu.seo-tags",
+    //             subPermissions: ['seo-tag', 'seo-tag.store', 'seo-tag.edit', 'seo-tag.update', 'seo-tag.delete'],
+    //             to: "/app/seo-tags",
+    //             subs: [{
+    //                 icon: 'simple-icon-note',
+    //                 label: "menu.create",
+    //                 permissions: 'seo-tag.store',
+    //                 to: "/app/seo-tags/create",
+    //             },
+    //                 {
+    //                     icon: 'iconsminds-preview',
+    //                     label: "menu.view",
+    //                     permissions: 'seo-tag',
+    //                     to: "/app/seo-tags/view",
+    //                 }]
+    //         }
+    //     ]
+    // },
+    // {
+    //     id: "newsletter",
+    //     icon: "iconsminds-bird-delivering-letter",
+    //     label: "menu.newsletter",
+    //     permissions: 'newsletter',
+    //     to: "/app/newsletter",
+    // },
+    // {
+    //     id: 'settings',
+    //     icon: 'simple-icon-settings',
+    //     label: 'menu.settings',
+    //     subPermissions: [
+    //         'permission',
+    //         'permission.store',
+    //         'permission.edit',
+    //         'permission.update',
+    //         'permission.delete',
+    //         'role',
+    //         'role.store',
+    //         'role.edit',
+    //         'role.update',
+    //         'role.delete',
+    //     ],
+    //     to: "/app/settings/general",
+    //     subs: [
+    //         {
+    //             id: 'Roles',
+    //             icon: "iconsminds-key-lock",
+    //             label: "menu.roles",
+    //             subPermissions: [
+    //                 'role',
+    //                 'role.store',
+    //                 'role.edit',
+    //                 'role.update',
+    //                 'role.delete',
+    //             ],
+    //             to: "/app/roles",
+    //             subs: [{
+    //                 icon: 'simple-icon-note',
+    //                 label: "menu.create",
+    //                 permissions: 'role.store',
+    //                 to: "/app/roles/create",
+    //             }, {
+    //                 icon: 'iconsminds-preview',
+    //                 label: "menu.view",
+    //                 permissions: 'role',
+    //                 to: "/app/roles/view",
+    //             }]
+    //         },
+    //         {
+    //             id: 'permissions',
+    //             icon: "simple-icon-key",
+    //             label: "menu.permissions",
+    //             subPermissions: [
+    //                 'permission',
+    //                 'permission.store',
+    //                 'permission.edit',
+    //                 'permission.update',
+    //                 'permission.delete',
+    //             ],
+    //             to: "/app/permissions",
+    //             subs: [{
+    //                 icon: 'simple-icon-note',
+    //                 label: "menu.create",
+    //                 permissions: 'permission.store',
+    //                 to: "/app/permissions/create",
+    //             },
+    //                 {
+    //                     icon: 'iconsminds-preview',
+    //                     label: "menu.view",
+    //                     permissions: 'permission',
+    //                     to: "/app/permissions/view",
+    //                 }]
+    //         },
+    //     ]
+    // },
 //     {
 //     id: 'Users',
 //     icon: "simple-icon-user-follow",

@@ -1,7 +1,7 @@
 {
-  "name": "HexaaPanel",
+  "name": "HeyDaddy",
   "version": "1.0.0",
-  "description": "The Hexaa",
+  "description": "HeyDaddy",
   "private": true,
   "dependencies": {
     "@glidejs/glide": "^3.3.0",
@@ -10,7 +10,9 @@
     "@syncfusion/ej2-react-inputs": "^18.3.35",
     "@syncfusion/ej2-react-progressbar": "^18.3.35",
     "availity-reactstrap-validation": "^2.6.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
+    "browserslist": "^4.16.6",
+    "caniuse-lite": "^1.0.30001230",
     "chart.js": "^2.7.2",
     "classnames": "2.2.6",
     "formik": "^1.5.1",
@@ -53,8 +55,8 @@
     "redux-saga": "^1.0.2",
     "rsuite": "^4.3.4",
     "sortablejs": "^1.6.1",
-    "video.js": "^7.6.0",
-    "yup": "^0.27.0"
+    "video.js": "^7.12.3",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "react-scripts start",

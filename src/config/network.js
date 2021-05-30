@@ -14,9 +14,30 @@ export default {
             return {e}
         }
     },
+    delete: async (url, config) => {
+        try{
+            return await axios.delete(url, config)
+        }
+        catch(e){
+            // const message = "Something went wrong. Please try Again Later";
+            // console.log(e.response);
+            handleErrors(e)
+            return {e}
+        }
+    },
     post: async (url,data, config) => {
         try{
             return await axios.post(url, data, config);
+        }
+        catch(e){
+            // console.log(e.response);
+            handleErrors(e);
+            return {e}
+        }
+    },
+    put: async (url,data, config) => {
+        try{
+            return await axios.put(url, data, config);
         }
         catch(e){
             // console.log(e.response);

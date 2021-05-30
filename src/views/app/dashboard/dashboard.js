@@ -20,7 +20,7 @@ class DefaultDashboard extends Component {
                     <Colxx lg="12" xl="12" className="mb-4">
                         {/*<RecentSignals />*/}
                         <div className="jumbotron text-center">
-                            <h1 className="display-4">The Hexaa Blog Dashboard!</h1>
+                            <h1 className="display-4">The HeyDaddy Dashboard!</h1>
                             <hr className="my-4"/>
                         </div>
                     </Colxx>

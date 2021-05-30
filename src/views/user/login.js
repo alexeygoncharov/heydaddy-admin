@@ -8,6 +8,7 @@ import {Colxx} from "../../components/common/CustomBootstrap";
 import IntlMessages from "../../helpers/IntlMessages";
 import ApiCall from '../../config/network';
 import Url from '../../config/api';
+import {NotificationManager} from "../../components/common/react-notifications";
 
 class Login extends Component {
   constructor(props) {
@@ -29,6 +30,7 @@ class Login extends Component {
           password: values.password
         })
         if (response.status === 200){
+          console.log(response.data)
           this.setState({loading: false, error: {status: false, message: ''}});
           localStorage.setItem('userToken', response.data.token);
           localStorage.setItem('currentUser', JSON.stringify(response.data.user));
@@ -36,14 +38,14 @@ class Login extends Component {
           this.props.history.push('/')
         }else {
           this.setState({loading: false});
-          // return  NotificationManager.error(
-          //     "Invalid Credentials",
-          //     "Login Error",
-          //     3000,
-          //     null,
-          //     null,
-          //     'filled'
-          // );
+          return  NotificationManager.error(
+              "Invalid Credentials",
+              "Login Error",
+              3000,
+              null,
+              null,
+              'filled'
+          );
         }
         // console.log(response)
       }

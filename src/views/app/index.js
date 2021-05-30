@@ -61,6 +61,7 @@ const Tags = React.lazy(() => import( './Tags'));
 const SeoTags = React.lazy(() => import( './Seo-Tags'));
 const Authors = React.lazy(() => import( './Authors'));
 const Posts = React.lazy(() => import( './Posts'));
+const Language = React.lazy(() => import( './language'));
 const Quotes = React.lazy(() => import( './Quotes'));
 
 class App extends Component {
@@ -111,6 +112,10 @@ class App extends Component {
               <Route
                   path={`${match.url}/post`}
                   render={props => <Posts {...props} />}
+              />
+              <Route
+                  path={`${match.url}/language`}
+                  render={props => <Language {...props} />}
               />
               <Route
                   path={`${match.url}/newsletter`}

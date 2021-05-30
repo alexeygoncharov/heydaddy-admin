@@ -274,7 +274,7 @@ class TopNav extends Component {
           {/*</div>*/}
         </div>
         <a className="navbar-logo" href="/">
-         <h3 className='mt-2'>The Hexaa</h3>
+         <h3 className='mt-2'>HeyDaddy</h3>
           {/*<span className="logo d-none d-xs-block" />*/}
           {/*<span className="logo-mobile d-block d-xs-none" />*/}
         </a>

@@ -22,14 +22,14 @@ class Error extends Component {
               <Colxx xxs="12" md="10" className="mx-auto my-auto">
                 <Card className="auth-card">
                   <div className="position-relative image-side text-center">
-                    <p className="h2">Hexaa Blog Admin Panel</p>
+                    <p className="h2">HeyDaddy Blog Admin Panel</p>
                     <img alt='Blog logo' src={'/assets/img/hexaa_icon.png'} style={{maxHeight: '250px'}}/>
                     {/*<p className="white mb-0">Yes, it is indeed!</p>*/}
                   </div>
                   <div className="form-side">
                     <NavLink to={`/`} className="black">
                       {/*<span className="logo-single" />*/}
-                      <h2>The Hexaa</h2>
+                      <h2>HeyDaddy</h2>
                     </NavLink>
                     <CardTitle className="mb-4">
                       <IntlMessages id="pages.error-title" />
