@@ -14,23 +14,23 @@ const initialState = {
     loading: false,
     spinning: false
 }
-export default class UpdatePermission extends Component {
+export default class UpdateService extends Component {
     constructor(props) {
         super(props);
         this.state = initialState;
     }
 
     componentDidMount() {
-        this.getSinglePermissionData();
+        this.getSingleData();
     }
 
-    getSinglePermissionData = async ()=> {
+    getSingleData = async ()=> {
         this.setState({spinning: true});
-        let response = await ApiCall.get(`${Url.EDIT_LANGUAGE}/${this.props.match.params.id}`, await config());
+        let response = await ApiCall.get(`${Url.EDIT_SERVICE}/${this.props.match.params.id}`, await config());
         if(response.status === 200){
             this.setState({
-                name: response.data.language.name,
-                id: response.data.language._id,
+                name: response.data.service.name,
+                id: response.data.service._id,
                 spinning: false
             });
         }
@@ -47,15 +47,15 @@ export default class UpdatePermission extends Component {
         e.preventDefault();
         const {name} = this.state;
         this.setState({loading: true});
-        let response = await ApiCall.put(`${Url.UPDATE_LANGUAGE}/${this.props.match.params.id}`, {
+        let response = await ApiCall.put(`${Url.UPDATE_SERVICE}/${this.props.match.params.id}`, {
             name: name,
             id: this.props.match.params.id
         }, await config());
         if(response.status === 200){
             this.setState(initialState);
-            this.props.history.push('/app/language/view')
+            this.props.history.push('/app/service/view')
             return  NotificationManager.success(
-                "Language Updated Successfully",
+                "Service Updated Successfully",
                 "Success",
                 3000,
                 null,
@@ -75,7 +75,7 @@ export default class UpdatePermission extends Component {
                 <Row>
                     <Colxx xxs="12">
                         <div className="text-zero top-right-button-container">
-                            <Link to='/app/language/view'><Button size='lg' color={'secondary'}>Cancel</Button></Link>
+                            <Link to='/app/service/view'><Button size='lg' color={'secondary'}>Cancel</Button></Link>
                         </div>
                         <Breadcrumb heading="client.edit" match={this.props.match} />
                         <Separator className="mb-5" />
@@ -95,7 +95,7 @@ export default class UpdatePermission extends Component {
                                     <Form className="dashboard-quick-post" onSubmit={this.updatePermission}>
                                         <FormGroup row>
                                             <Label sm="3">
-                                                <IntlMessages id="language.update-language" />
+                                                <IntlMessages id="service.update-service" />
                                             </Label>
                                             <Colxx sm="9">
                                                 <Input type="text" value={name} onChange={this.handleInputChange} name="name" placeholder={'Language Name *'} required/>

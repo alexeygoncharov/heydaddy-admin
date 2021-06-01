@@ -26,7 +26,7 @@ const data = [{
     // ]
   },
     {
-            id: 'posts',
+            id: 'language',
             icon: "iconsminds-quill-3",
             label: "menu.languages",
             subPermissions: ['languages'],
@@ -43,6 +43,26 @@ const data = [{
                     label: "menu.view",
                     permissions: 'languages',
                     to: "/app/language/view"
+                }]
+    },
+    {
+            id: 'service',
+            icon: "simple-icon-grid",
+            label: "menu.services",
+            subPermissions: ['service'],
+            to: "/app/post/view",
+            subs: [
+                    {
+                    icon: 'simple-icon-note',
+                    label: "menu.create",
+                    permissions: 'service.create',
+                    to: "/app/service/create",
+                },
+                {
+                    icon: "iconsminds-preview",
+                    label: "menu.view",
+                    permissions: 'service',
+                    to: "/app/service/view"
                 }]
     },
     // {

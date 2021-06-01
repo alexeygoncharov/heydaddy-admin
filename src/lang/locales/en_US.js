@@ -1178,6 +1178,9 @@ module.exports = {
   "preferredLanguage": "Preferred Language",
   /////////////Lang SETTINGS/////////////////////////////
   "menu.language": "Languages",
+  "menu.services": "Services",
+  "service.update-service": "Update Service",
+  "menu.service": "Services",
   "menu.languages": "Languages",
   "language.create": "Create",
   "language.create-language": "Create Language",

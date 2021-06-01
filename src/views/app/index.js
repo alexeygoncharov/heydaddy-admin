@@ -52,17 +52,8 @@ const Settings = React.lazy(() =>
 // const AllNotifications = React.lazy(()=> import('./all-notifications'));
 // const Users = React.lazy(()=> import('./users'));
 const AdminProfile = React.lazy(()=> import('./admin-profile'));
-// const UploadVideo = React.lazy(()=> import('./videos'));
-const Roles = React.lazy(()=> import('./roles'));
-const Permissions = React.lazy(()=> import('./permissions'));
-const Users = React.lazy(() => import( './users'));
-const NewsLetter = React.lazy(() => import( './News-Letter'));
-const Tags = React.lazy(() => import( './Tags'));
-const SeoTags = React.lazy(() => import( './Seo-Tags'));
-const Authors = React.lazy(() => import( './Authors'));
-const Posts = React.lazy(() => import( './Posts'));
 const Language = React.lazy(() => import( './language'));
-const Quotes = React.lazy(() => import( './Quotes'));
+const Service = React.lazy(() => import( './service'));
 
 class App extends Component {
   componentDidMount() {
@@ -88,50 +79,12 @@ class App extends Component {
               {/*    render={props => <Chat {...props} />}*/}
               {/*/>*/}
               <Route
-                  path={`${match.url}/roles`}
-                  render={props => <Roles {...props} />}
-              />
-
-              <Route
-                  path={`${match.url}/permissions`}
-                  render={props => <Permissions {...props} />}
-              />
-              <Route
-                  path={`${match.url}/users`}
-                  render={props => <Users {...props} />}
-              />
-              <Route
-                  path={`${match.url}/quote`}
-                  render={props => <Quotes {...props} />}
-              />
-
-              <Route
-                  path={`${match.url}/author`}
-                  render={props => <Authors {...props} />}
-              />
-              <Route
-                  path={`${match.url}/post`}
-                  render={props => <Posts {...props} />}
-              />
-              <Route
                   path={`${match.url}/language`}
                   render={props => <Language {...props} />}
               />
               <Route
-                  path={`${match.url}/newsletter`}
-                  render={props => <NewsLetter {...props} />}
-              />
-              <Route
-                  path={`${match.url}/tags`}
-                  render={props => <Tags {...props} />}
-              />
-              <Route
-                  path={`${match.url}/seo-tags`}
-                  render={props => <SeoTags {...props} />}
-              />
-              <Route
-                  path={`${match.url}/profile`}
-                  render={props => <AdminProfile {...props} />}
+                  path={`${match.url}/service`}
+                  render={props => <Service {...props} />}
               />
               {/*<Route*/}
               {/*    path={`${match.url}/notifications`}*/}
