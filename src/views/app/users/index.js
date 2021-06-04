@@ -11,21 +11,24 @@ const Blog = React.lazy(() =>
     import(/* webpackChunkName: "create-client" */ '../../../components/details')
 );
 
+const UpdateUser = React.lazy(() => import( './edit'));
+
 
 const Roles = ({ match }) => (
     <Suspense fallback={<div className="loading" />}>
         <Switch>
-            <Redirect exact from={`${match.url}/`} to={`${match.url}/create`} />
+            <Redirect exact from={`${match.url}/`} to={`${match.url}/view`} />
             <Route
                 path={`${match.url}/create`}
                 render={props => <CreateUser {...props} />}
             />
             <Route
-            path={`${match.url}/blog`}
-            render={props => <Blog {...props} />}/>
-            <Route
                 path={`${match.url}/view`}
                 render={props => <AllUsers {...props} />}
+            />
+            <Route
+                path={`${match.url}/edit/:id`}
+                render={props => <UpdateUser {...props} />}
             />
             <Redirect to="/error" />
         </Switch>

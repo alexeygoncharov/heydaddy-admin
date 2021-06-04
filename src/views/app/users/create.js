@@ -6,21 +6,30 @@ import Breadcrumb from "../../../containers/navs/Breadcrumb";
 import ApiCall from '../../../config/network';
 import Url from '../../../config/api';
 import {NotificationManager} from "../../../components/common/react-notifications";
-import {config} from "../../../config/env";
+import {config, multipartConfig} from "../../../config/env";
 import CustomSelectInput from "../../../components/common/CustomSelectInput";
 import Select from "react-select";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 // import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {Link} from "react-router-dom";
+import DropzoneExample from "../../../containers/forms/DropzoneExample";
 
 const initialState = {
+    image: "",
+    designation: '',
     name: '',
     phone: '',
+    email2: '',
+    phoneNumber2: '',
     email: '',
     password: '',
     confirmPassword: '',
     roles: [],
     selectedRoles: [],
+    provinces: [],
+    selectedProvinces: [],
     loading: false
 }
 
@@ -31,38 +40,30 @@ export default class CreateUser extends Component {
     };
     componentDidMount() {
         this.getAllRoles();
-        // this.getCountriesList();
+        this.getAllProvinces();
     };
-
-    // getCountriesList = async () => {
-    //     this.setState({spinning: true})
-    //     let response = await ApiCall.get(Url.ALL_COUNTRIES, {});
-    //     if(response.status === 200){
-    //         this.setState({
-    //             countries: response.data.countries,
-    //             spinning: false
-    //         })
-    //     }
-    //     // console.log(response)
-    // };
 
     createUser = async (e)=> {
         e.preventDefault();
-        const {name, email, password, phone} = this.state;
+        const {name, email, email2, phoneNumber2, password, phone, designation, image} = this.state;
         let validation = this.handleValidations();
         if(validation.status){
-            let userSelectedRoles = this.state.selectedRoles.map( (item) => {
-                return item.value
-            });
+            let userSelectedRoles = this.state.selectedRoles.value
+            let userSelectedProvince = this.state.selectedProvinces.value
+
             this.setState({loading: true});
-                this.setState({ loading: true });
-                let response = await ApiCall.post(Url.USER_STORE, {
-                    name: name,
-                    email: email,
-                    password: password,
-                    phoneNumber: phone,
-                    roles: userSelectedRoles,
-                }, await config())
+            const data = new FormData();
+            data.append('name', name);
+            data.append('email', email);
+            data.append('designation', designation);
+            data.append('password', password);
+            data.append('phoneNumber', phone);
+            data.append('roles', userSelectedRoles);
+            data.append('province', userSelectedProvince);
+            data.append('email2', email2);
+            data.append('phoneNumber2', phoneNumber2);
+            data.append('image', image);
+            let response = await ApiCall.post(Url.USER_STORE, data, await multipartConfig());
                 if(response.status === 200){
                     this.props.history.push('/app/users/view');
                     return  NotificationManager.success(
@@ -91,6 +92,22 @@ export default class CreateUser extends Component {
         this.setState({selectedRoles });
     };
 
+    handleSelectedProvinces = selectedProvinces => {
+        this.setState({selectedProvinces });
+    };
+
+    handleChangeImage  = (file) => {
+        this.setState({
+            image: file
+        })
+    }
+    removeImage = (file) => {
+        if(file){
+            this.setState({
+                image: ""
+            })
+        }
+    }
     getAllRoles = async ()=> {
         this.setState({spinning: true});
         let response = await ApiCall.get(Url.GET_ALL_ROLES, await config())
@@ -110,7 +127,27 @@ export default class CreateUser extends Component {
             this.setState({roles: options, spinning: false});
         }
     };
+    getAllProvinces = async () =>{
+        this.setState({spinning: true});
+        let response = await ApiCall.get(Url.ALL_PROVINCES_OPEN, await config())
+        // return console.log(response)
+        if(response.status=== 200){
+            let options = response.data.provinces.map(function (item) {
+                return {
+                    value: item._id,
+                    label: item.name,
+                    key: item._id,
+                };
+            })
+            // console.log(options)
+            this.setState({provinces: options, spinning: false});
+        }
+    }
     handleValidations =  () => {
+        let imageValidation = {
+            message: 'Please Select image',
+            status: false,
+        };
         let fNameValidation = {
             message: "Name Is Required",
             status: false
@@ -119,12 +156,21 @@ export default class CreateUser extends Component {
             message: 'User Email Is Required',
             status: false
         };
+
         let phoneValidation = {
-            message: 'User Phone Is Required',
+            message: 'Phone number 1 is Required',
             status: false
         };
-        let dobValidation = {
-            message: 'User Date of Birth Is Required',
+        let phoneValidationLength = {
+            message: 'Phone number 1 must be a valid number',
+            status: false
+        };
+        let phoneValidation2 = {
+            message: 'Phone number 2 is Required',
+            status: false
+        };
+        let phoneValidationLength2 = {
+            message: 'Phone number 2 must be a valid number',
             status: false
         };
         let passwordValidation = {
@@ -143,8 +189,16 @@ export default class CreateUser extends Component {
             message: 'Password & Confirm Password Does Not Match',
             status: false
         };
+        let provinceValidation = {
+            message: 'Please select province to User.',
+            status: false
+        };
         let roleValidation = {
-            message: 'Please assign at least one Role',
+            message: 'Please assign one Role to User.',
+            status: false
+        };
+        let designationValidation = {
+            message: "Designation Is Required",
             status: false
         };
 
@@ -153,21 +207,26 @@ export default class CreateUser extends Component {
         }
         return this.state.name !== ""?
             this.state.email === ""? emailValidation :
-                this.state.phone === ""? phoneValidation :
-                    this.state.dob === ""? dobValidation :
-                        this.state.password === ""? passwordValidation :
-                            this.state.confirmPassword === ""? confirmPasswordValidation :
-                                this.state.password.length <8? passwordLength :
-                                    this.state.password !== this.state.confirmPassword? passwordEquality :
-            this.state.selectedRoles.length === 0?
-                roleValidation :
+                this.state.designation === ""? designationValidation :
+                    this.state.phone === "" ? phoneValidation :
+                        this.state.phone.length != 12 ? phoneValidationLength :
+                            // this.state.phoneNumber2 === "" ? phoneValidation2 :
+                                    this.state.image === ""? imageValidation :
+                                        this.state.password === ""? passwordValidation :
+                                            this.state.confirmPassword === ""? confirmPasswordValidation :
+                                                this.state.password.length <8? passwordLength :
+                                                    this.state.password !== this.state.confirmPassword? passwordEquality :
+                                                        this.state.selectedRoles.length === 0? roleValidation :
+                                                        this.state.selectedProvinces.length === 0? provinceValidation :
+                                                            this.state.phoneNumber2.length < 4 ? passed :
+                                                                this.state.phoneNumber2.length != 12 ? phoneValidationLength2 :
                 passed :
             fNameValidation
     };
 
 
     render() {
-        const { phone, email, password, confirmPassword, selectedRoles, roles, name, spinning} = this.state;
+        const { designation, phone, email, email2, phoneNumber2, password, confirmPassword, selectedRoles, provinces, selectedProvinces, roles, name, spinning} = this.state;
         return (
             <Fragment>
                 <Row>
@@ -194,33 +253,87 @@ export default class CreateUser extends Component {
                                         <Form className="dashboard-quick-post" onSubmit={this.createUser}>
                                             <FormGroup row>
                                                 <Label sm="3">
-                                                    <IntlMessages id="user.name" />
+                                                    Designation *
                                                 </Label>
                                                 <Colxx sm="9">
-                                                    <Input type="text" value={name} onChange={this.handleInputChange} name="name" placeholder={'Name *'} required/>
+                                                    <Input type="text" value={designation} onChange={this.handleInputChange} name="designation" placeholder={'Designation *'}/>
                                                 </Colxx>
                                             </FormGroup>
                                             <FormGroup row>
                                                 <Label sm="3">
-                                                    <IntlMessages id="user.email" />
+                                                    <IntlMessages id="user.name" /> *
                                                 </Label>
                                                 <Colxx sm="9">
-                                                    <Input type="email" value={email} onChange={this.handleInputChange} name="email" placeholder={'Email *'} required/>
+                                                    <Input type="text" value={name} onChange={this.handleInputChange} name="name" placeholder={'Name *'}/>
+                                                </Colxx>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label sm="3">
+                                                    Email 1 *
+                                                </Label>
+                                                <Colxx sm="9">
+                                                    <Input type="email" value={email} onChange={this.handleInputChange} name="email" placeholder={'Email *'}/>
                                                 </Colxx>
                                             </FormGroup>
 
                                             <FormGroup row>
                                                 <Label sm="3">
-                                                    <IntlMessages id="user.phone" />
+                                                    Email 2
                                                 </Label>
                                                 <Colxx sm="9">
-                                                    <Input type="text" value={phone} onChange={this.handleInputChange} name="phone" placeholder={'Phone Number *'} required/>
+                                                    <Input type="email" value={email2} onChange={this.handleInputChange} name="email2" placeholder={'Email'}/>
                                                 </Colxx>
                                             </FormGroup>
 
                                             <FormGroup row>
                                                 <Label sm="3">
-                                                    <IntlMessages id="user.roles" />
+                                                   Phone No. 1 *
+                                                </Label>
+                                                <Colxx sm="9">
+                                                    {/*<Input type="number" value={phone}  name="phone" placeholder={'Phone Number *'}/>*/}
+                                                    <PhoneInput
+                                                        country={'pk'}
+                                                        value={phone}
+                                                        onChange={phone => this.setState({ phone })}
+                                                    />
+
+                                                </Colxx>
+                                            </FormGroup>
+
+
+                                            <FormGroup row>
+                                                <Label sm="3">
+                                                   Phone No. 2
+                                                </Label>
+                                                <Colxx sm="9">
+                                                    {/*<Input type="number" value={phoneNumber2} onChange={this.handleInputChange} name="phoneNumber2" placeholder={'Phone Number'}/>*/}
+                                                    <PhoneInput
+                                                        country={'pk'}
+                                                        value={phoneNumber2}
+                                                        onChange={phoneNumber2 => this.setState({ phoneNumber2 })}
+                                                    />
+                                                </Colxx>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label sm="3">
+                                                    Select Province *
+                                                </Label>
+                                                <Colxx sm="9">
+                                                    <Select
+                                                        components={{ Input: CustomSelectInput }}
+                                                        className="react-select"
+                                                        classNamePrefix="react-select"
+                                                        placeholder="Select Province *"
+                                                        name="selectedRoles"
+                                                        value={selectedProvinces}
+                                                        onChange={this.handleSelectedProvinces}
+                                                        options={provinces}
+                                                    />
+                                                </Colxx>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                                <Label sm="3">
+                                                    <IntlMessages id="user.roles" /> *
                                                 </Label>
                                                 <Colxx sm="9">
                                                     <Select
@@ -228,7 +341,6 @@ export default class CreateUser extends Component {
                                                         className="react-select"
                                                         classNamePrefix="react-select"
                                                         placeholder="Select Roles *"
-                                                        isMulti
                                                         name="selectedRoles"
                                                         value={selectedRoles}
                                                         onChange={this.handleSelectedRoles}
@@ -237,21 +349,34 @@ export default class CreateUser extends Component {
                                                 </Colxx>
                                             </FormGroup>
 
+                                            <FormGroup row>
+                                                <Label sm="3">
+                                                    Image *
+                                                </Label>
+                                                <Colxx sm="9">
+                                                    <DropzoneExample
+                                                        fileTypes="image/*"
+                                                        onChange={this.handleChangeImage}
+                                                        removeFile={this.removeImage}
+                                                    />
+                                                </Colxx>
+                                            </FormGroup>
+
 
                                             <FormGroup row>
                                                 <Label sm="3">
-                                                    <IntlMessages id="user.password" />
+                                                    <IntlMessages id="user.password" /> *
                                                 </Label>
                                                 <Colxx sm="9">
-                                                    <Input type="password" value={password} onChange={this.handleInputChange} name="password" placeholder={'Password *'} required/>
+                                                    <Input type="password" value={password} onChange={this.handleInputChange} name="password" placeholder={'Password *'}/>
                                                 </Colxx>
                                             </FormGroup>
                                             <FormGroup row>
                                                 <Label sm="3">
-                                                    <IntlMessages id="user.confirm-password" />
+                                                    <IntlMessages id="user.confirm-password" /> *
                                                 </Label>
                                                 <Colxx sm="9">
-                                                    <Input type="password" value={confirmPassword} onChange={this.handleInputChange} name="confirmPassword" placeholder={'Confirm Password *'} required/>
+                                                    <Input type="password" value={confirmPassword} onChange={this.handleInputChange} name="confirmPassword" placeholder={'Confirm Password *'}/>
                                                 </Colxx>
                                             </FormGroup>
 
