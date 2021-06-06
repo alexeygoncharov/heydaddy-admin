@@ -1178,6 +1178,7 @@ module.exports = {
   "preferredLanguage": "Preferred Language",
   /////////////Lang SETTINGS/////////////////////////////
   "menu.language": "Languages",
+  "menu.models": "Models",
   "menu.services": "Services",
   "service.update-service": "Update Service",
   "menu.service": "Services",
@@ -1186,6 +1187,7 @@ module.exports = {
   "language.create-language": "Create Language",
   "language.abbreviation": "Abbreviation",
   "language.locale": "Locale",
+  "menu.model": "Models",
   "language.name": "Name",
   "timeline": "Timeline",
   "language.image": "Image",

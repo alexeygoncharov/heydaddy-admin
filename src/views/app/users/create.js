@@ -361,8 +361,6 @@ export default class CreateUser extends Component {
                                                     />
                                                 </Colxx>
                                             </FormGroup>
-
-
                                             <FormGroup row>
                                                 <Label sm="3">
                                                     <IntlMessages id="user.password" /> *

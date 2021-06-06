@@ -18,4 +18,16 @@ export default {
     EDIT_SERVICE: base + '/services/edit',
     UPDATE_SERVICE: base + '/services/update',
     DELETE_SERVICE: base + '/services/delete',
+
+
+    // ALL COUNTRIES
+    ALL_COUNTRIES_OPEN : base + '/region/countries',
+    ALL_PROVINCES : base + '/region/states',
+    ALL_CITIES : base + '/region/cities',
+
+    // Model Stored
+    MODEL_STORE: base + '/users/create-girl-account',
+    GET_ALL_MODELS:  base + '/users/model/all'
+
+
 }

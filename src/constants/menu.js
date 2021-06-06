@@ -65,6 +65,26 @@ const data = [{
                     to: "/app/service/view"
                 }]
     },
+    {
+        id: 'models',
+        icon: "simple-icon-user-female",
+        label: "menu.models",
+        subPermissions: ['models'],
+        to: "/app/model/view",
+        subs: [
+            {
+                icon: 'simple-icon-note',
+                label: "menu.create",
+                permissions: 'models.create',
+                to: "/app/model/create",
+            },
+            {
+                icon: "iconsminds-preview",
+                label: "menu.view",
+                permissions: 'models',
+                to: "/app/model/view"
+            }]
+    },
     // {
     //     id: 'Users',
     //     icon: "simple-icon-user-follow",

@@ -30,9 +30,9 @@ export default {
             return await axios.post(url, data, config);
         }
         catch(e){
-            // console.log(e.response);
+            // console.log("this is data",e.response.data);
             handleErrors(e);
-            return {e}
+            return {e: e.response}
         }
     },
     put: async (url,data, config) => {

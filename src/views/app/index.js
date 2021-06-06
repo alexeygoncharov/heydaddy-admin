@@ -54,6 +54,7 @@ const Settings = React.lazy(() =>
 const AdminProfile = React.lazy(()=> import('./admin-profile'));
 const Language = React.lazy(() => import( './language'));
 const Service = React.lazy(() => import( './service'));
+const Model = React.lazy(() => import( './models'));
 
 class App extends Component {
   componentDidMount() {
@@ -85,6 +86,10 @@ class App extends Component {
               <Route
                   path={`${match.url}/service`}
                   render={props => <Service {...props} />}
+              />
+              <Route
+                  path={`${match.url}/model`}
+                  render={props => <Model {...props} />}
               />
               {/*<Route*/}
               {/*    path={`${match.url}/notifications`}*/}
