@@ -53,10 +53,10 @@ export default class Posts extends Component {
         }
     };
     getAllLanguagesSearch = async (search)=> {
-        let response = await ApiCall.get(`${Url.GET_ALL_SERVICES}?page=${1}&limit=${this.state.displayLength}&q=${search}`, await config())
+        let response = await ApiCall.get(`${Url.GET_ALL_MODELS}?page=${1}&limit=${this.state.displayLength}&q=${search}`, await config())
         if(response.status=== 200){
             this.setState({
-                data: response.data.services,
+                data: response.data.models,
                 length: response.data.length});
         }else {
             this.setState({spinning: false });
@@ -64,11 +64,11 @@ export default class Posts extends Component {
     };
 
     dataShownPagination = async(dataKey) => {
-        let response = await ApiCall.get(`${Url.GET_ALL_SERVICES}?page=${dataKey}&limit=${this.state.displayLength}&q=${this.state.search}`, await config())
+        let response = await ApiCall.get(`${Url.GET_ALL_MODELS}?page=${dataKey}&limit=${this.state.displayLength}&q=${this.state.search}`, await config())
 
         if(response.status=== 200){
             this.setState({
-                data: response.data.services,
+                data: response.data.models,
                 length: response.data.length});
         }else {
             this.setState({spinning: false });
@@ -124,12 +124,12 @@ export default class Posts extends Component {
     };
     confirmDelete = async (item) => {
         this.setState({spinning: true});
-        let response = await ApiCall.delete(`${Url.DELETE_SERVICE}/${item}`, await config());
+        let response = await ApiCall.delete(`${Url.DELETE_MODEL}/${item}`, await config());
         if(response.status === 200){
             this.setState({spinning: false});
             this.getAllLanguages();
             return  NotificationManager.success(
-                "Service deleted Successfully",
+                "Model deleted Successfully",
                 "Success",
                 3000,
                 null,
@@ -191,10 +191,50 @@ export default class Posts extends Component {
                                             </Cell>
                                         </Column>
                                         <Column minWidth={200}  flexGrow={1} align="center">
-                                            <HeaderCell> Title </HeaderCell>
+                                            <HeaderCell> Name </HeaderCell>
                                             <Cell>
                                                 {(rowData, rowIndex) => {
                                                     return <span>{rowData.name}</span>
+                                                }}
+                                            </Cell>
+                                        </Column>
+                                        <Column minWidth={200}  flexGrow={1} align="center">
+                                            <HeaderCell> Email </HeaderCell>
+                                            <Cell>
+                                                {(rowData, rowIndex) => {
+                                                    return <span>{rowData.email}</span>
+                                                }}
+                                            </Cell>
+                                        </Column>
+                                        <Column minWidth={200}  flexGrow={1} align="center">
+                                            <HeaderCell> Age </HeaderCell>
+                                            <Cell>
+                                                {(rowData, rowIndex) => {
+                                                    return <span>{rowData.age}</span>
+                                                }}
+                                            </Cell>
+                                        </Column>
+                                        <Column width={100} align="center">
+                                            <HeaderCell>Profile Image</HeaderCell>
+                                            <Cell>
+                                                {(rowData, rowIndex) => {
+                                                    if(rowData?.profile){
+                                                        return <div>
+                                                            <img style={{height: '20px'}} src={rowData?.profile?.path} alt='profile'/>
+                                                        </div>
+                                                    }
+                                                }}
+                                            </Cell>
+                                        </Column>
+                                        <Column width={100} align="center">
+                                            <HeaderCell>National Id</HeaderCell>
+                                            <Cell>
+                                                {(rowData, rowIndex) => {
+                                                    if(rowData?.nationalId){
+                                                        return <div>
+                                                            <img style={{height: '20px'}} src={rowData?.nationalId?.path} alt='national Id'/>
+                                                        </div>
+                                                    }
                                                 }}
                                             </Cell>
                                         </Column>
@@ -203,12 +243,12 @@ export default class Posts extends Component {
                                             <Cell>
                                                 {(rowData, rowIndex) => {
                                                     return <div>
-                                                        {this.state.userPermissions.find(item => item.name === "languages.edit") &&
+                                                        {this.state.userPermissions.find(item => item.name === "models.edit") &&
                                                         <Button color="secondary" size="xs" className="mb-2">
-                                                            <Link to={`/app/service/edit/${rowData._id}`} style={{color: 'white'}}><IntlMessages id="edit" /></Link>
+                                                            <Link to={`/app/model/edit/${rowData._id}`} style={{color: 'white'}}><IntlMessages id="edit" /></Link>
                                                         </Button>}
                                                         {" "}{" "}
-                                                        {this.state.userPermissions.find(item => item.name === "languages.delete") &&
+                                                        {this.state.userPermissions.find(item => item.name === "models.delete") &&
                                                         <Button color="danger" size="xs" className="mb-2" onClick={()=> this.changeStatusDelete(rowData._id)}>
                                                             <IntlMessages id="delete" />
                                                         </Button>}

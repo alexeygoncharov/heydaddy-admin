@@ -27,7 +27,10 @@ export default {
 
     // Model Stored
     MODEL_STORE: base + '/users/create-girl-account',
-    GET_ALL_MODELS:  base + '/users/model/all'
+    MODEL_UPDATE: base + '/users/update-girl-account',
+    GET_ALL_MODELS:  base + '/users/model/all',
+    EDIT_MODEL: base + '/users/edit',
+    DELETE_MODEL: base + '/users',
 
 
 }

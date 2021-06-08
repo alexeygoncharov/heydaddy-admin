@@ -52,6 +52,11 @@ const initialState = {
     dropCountry: '',
     pricePerDay: '',
     age: '',
+    national: '',
+    services: [],
+    languages: [],
+    selectedServices: [],
+    selectedLanguages: [],
 }
 export default class CreateLanguage extends Component {
     constructor(props) {
@@ -61,18 +66,59 @@ export default class CreateLanguage extends Component {
 
     componentDidMount() {
         this._isMounted = false;
-        this.getAllMainCategories();
+        this.getAllDataOnCreation();
+        this.getAllServices();
+        this.getAllLanguages();
     }
+
+
+    getAllServices = async ()=> {
+        let response = await ApiCall.get(Url.GET_ALL_SERVICES, await config())
+        if(response.status=== 200){
+            let options = response.data.services.map(function (item) {
+                return {
+                    value: item._id,
+                    label: item.name,
+                    key: item._id
+                };
+            })
+            // console.log(options)
+            this.setState({services: options});
+        }
+    };
+
+    getAllLanguages = async ()=> {
+        let response = await ApiCall.get(Url.GET_ALL_LANGUAGES, await config())
+        if(response.status=== 200){
+            let options = response.data.languages.map(function (item) {
+                return {
+                    value: item._id,
+                    label: item.name,
+                    key: item._id
+                };
+            })
+            // console.log(options)
+            this.setState({languages: options});
+        }
+    };
+
+    handleSelectedLanguages = selectedLanguages => {
+        this.setState({selectedLanguages });
+    };
+
+    handleSelectedServices = selectedServices => {
+        this.setState({selectedServices });
+    };
 
     componentWillUnmount() {
         this._isMounted = true
     }
 
-    getAllMainCategories = async () => {
+    getAllDataOnCreation = async () => {
         if (!this._isMounted) {
             let responseCountries = await ApiCall.get(Url.ALL_COUNTRIES_OPEN, await config())
             if (responseCountries.status === 200) {
-                this.setState({countries: responseCountries.data.countries.reverse()});
+                this.setState({countries: responseCountries.data.countries});
             }
         }
 
@@ -80,7 +126,11 @@ export default class CreateLanguage extends Component {
 
     handleValidations =  () => {
         let imageValidation = {
-            message: 'Please Select image',
+            message: 'Please Select image for profile',
+            status: false,
+        };
+        let nationalValidation = {
+            message: 'Please Select image for National id',
             status: false,
         };
         let nameValidation = {
@@ -125,6 +175,7 @@ export default class CreateLanguage extends Component {
                             this.state.password === ""? passwordValidation :
                                 this.state.password.length <8? passwordLength :
                                     this.state.image === ""? imageValidation :
+                                      this.state.national === ""? nationalValidation :
                                         passed :
             nameValidation
     };
@@ -134,7 +185,14 @@ export default class CreateLanguage extends Component {
         const {name, age, email, password, pricePerDay, image,
             selectedCity,
             selectedCountry,
-            selectedProvince,} = this.state;
+            selectedProvince, national} = this.state;
+
+        let userSelectedLanguages = this.state.selectedLanguages.map(function (item) {
+            return item.value
+        });
+        let userSelectedServices = this.state.selectedServices.map(function (item) {
+            return item.value
+        });
         let validation = this.handleValidations();
         if(validation.status){
             this.setState({loading: true});
@@ -142,12 +200,15 @@ export default class CreateLanguage extends Component {
             data.append('name', name);
             data.append('email', email);
             data.append('password', password);
+            data.append('languages', JSON.stringify(userSelectedLanguages));
+            data.append('services', JSON.stringify(userSelectedServices));
             data.append('country', JSON.stringify(selectedCountry));
             data.append('state', JSON.stringify(selectedProvince));
             data.append('city', JSON.stringify(selectedCity));
             data.append('pricePerDay', pricePerDay);
             data.append('age', age);
             data.append('profile', image);
+            data.append('nationalId', national);
             let response = await ApiCall.post(Url.MODEL_STORE, data, await multipartConfig());
             if(response.status === 200){
                 this.props.history.push('/app/model/view');
@@ -185,6 +246,19 @@ export default class CreateLanguage extends Component {
         if(file){
             this.setState({
                 image: ""
+            })
+        }
+    }
+
+    handleChangeNational  = (file) => {
+        this.setState({
+            national: file
+        })
+    }
+    removeNational = (file) => {
+        if(file){
+            this.setState({
+                national: ""
             })
         }
     }
@@ -325,6 +399,44 @@ export default class CreateLanguage extends Component {
 
                                     <FormGroup row>
                                         <Label sm="3">
+                                            Services
+                                        </Label>
+                                        <Colxx sm="9">
+                                            <Select
+                                                components={{ Input: CustomSelectInput }}
+                                                className="react-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Select Service..."
+                                                isMulti
+                                                name="selectedPermissions"
+                                                value={this.state.selectedServices}
+                                                onChange={this.handleSelectedServices}
+                                                options={this.state.services}
+                                            />
+                                        </Colxx>
+                                    </FormGroup>
+
+                                    <FormGroup row>
+                                        <Label sm="3">
+                                           Languages
+                                        </Label>
+                                        <Colxx sm="9">
+                                            <Select
+                                                components={{ Input: CustomSelectInput }}
+                                                className="react-select"
+                                                classNamePrefix="react-select"
+                                                placeholder="Select Language..."
+                                                isMulti
+                                                name="selectedPermissions"
+                                                value={this.state.selectedLanguages}
+                                                onChange={this.handleSelectedLanguages}
+                                                options={this.state.languages}
+                                            />
+                                        </Colxx>
+                                    </FormGroup>
+
+                                    <FormGroup row>
+                                        <Label sm="3">
                                             Select Country *
                                         </Label>
                                         <Colxx sm="9">
@@ -404,6 +516,18 @@ export default class CreateLanguage extends Component {
                                                 fileTypes="image/*"
                                                 onChange={this.handleChangeImage}
                                                 removeFile={this.removeImage}
+                                            />
+                                        </Colxx>
+                                    </FormGroup>
+                                    <FormGroup row>
+                                        <Label sm="3">
+                                            National Id *
+                                        </Label>
+                                        <Colxx sm="9">
+                                            <DropzoneExample
+                                                fileTypes="image/*"
+                                                onChange={this.handleChangeNational}
+                                                removeFile={this.removeNational}
                                             />
                                         </Colxx>
                                     </FormGroup>
