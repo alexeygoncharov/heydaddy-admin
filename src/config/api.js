@@ -32,5 +32,9 @@ export default {
     EDIT_MODEL: base + '/users/edit',
     DELETE_MODEL: base + '/users',
 
+    GET_ALL_UNVERIFIED_MODELS_ACCOUNT: base + '/users/model/unverified',
+
+    APPROVE_MODEL : base + '/users/model'
+
 
 }
